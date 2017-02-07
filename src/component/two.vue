@@ -2,7 +2,8 @@
 	<div id="two">
 		<h2>第二个模块</h2>
 		<div>
-			<h3>{{items.}}</h3>
+			<h3>和风天气</h3>
+			
 		</div>
 	</div>
 
@@ -12,20 +13,21 @@
 	export default {
 		data () {
 			return {
-				items: [],
-				dataUrl: 'https://free-api.heweather.com/v5/forecast?city=包头&key=146ba7b820344558a47496c09c16ff6d'
+				items: null,
+				dataUrl: 'https://free-api.heweather.com/v5/hourly'
 			}
 		},
 		methods: {
 			getJsonP: function(_url){
-				this.$http.jsonp(_url,{},{
-					headers:{},
-					emulateJSON: true
+				this.$http.get(_url,{
+					params: {
+						city: '包头',
+						key: '146ba7b820344558a47496c09c16ff6d'
+					}
 				}).then(function(response){
-					this.items = response.HeWeather5
+					this.items = response.body.HeWeather5
 				},function(response){
-					this.items = response.HeWeather5
-					console.log('请求失败。');
+					console.log('请求失败');
 				});
 			}
 		},
